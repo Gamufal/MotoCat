@@ -9,10 +9,17 @@ package model;
  */
 public class Motorbike {
     
-    private String model; // The model name of the motorbike
-    private double price; // The price of the motorbike
-    private int displacement; // The engine displacement of the motorbike in cc
-    private int power; // The power of the motorbike in horsepower
+     /** The model name of the motorbike. */
+    private String model;
+    
+    /** The price of the motorbike in PLN. */
+    private double price;
+    
+    /** The engine displacement of the motorbike in cubic centimeters (cm3). */
+    private int displacement;
+    
+    /** The power output of the motorbike in kW. */
+    private int power;
 
     /**
      * Constructs a Motorbike with the specified attributes.

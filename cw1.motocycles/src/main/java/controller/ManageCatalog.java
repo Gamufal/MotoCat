@@ -5,13 +5,14 @@ import model.Motorbike;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Collections;
+import model.AppException;
 
 /**
  * This class is responsible for managing the motorcycle catalog.
  * It provides methods for adding, removing, updating, and searching motorbikes within a catalog.
  * 
  * @author Kamil Kotorc
- * @version 1.0
+ * @version 1.1
  */
 public class ManageCatalog {
     
@@ -19,8 +20,12 @@ public class ManageCatalog {
      * Clears all motorbikes from the specified catalog.
      *
      * @param catalog the catalog to be cleared
+     * @throws AppException if the catalog is empty
      */
-    public void clearCatalog(Catalog catalog) {
+    public void clearCatalog(Catalog catalog) throws AppException {
+        if (catalog.getMotorbikes().isEmpty()) {
+            throw new AppException("Cannot clear catalog because it is empty.");
+        }
         catalog.getMotorbikes().clear();
         System.out.println("Catalog " + catalog.getBrand() + " cleared.");
     }
@@ -177,14 +182,14 @@ public class ManageCatalog {
      *
      * @param catalog   the catalog from which the motorbike will be removed
      * @param motorbike the motorbike to remove
+     * @throws AppException if the motorbike is not found in the catalog
      */
-    public void RemoveMotorbike(Catalog catalog, Motorbike motorbike) {
-        if (catalog.getMotorbikes().contains(motorbike)) {
-            catalog.getMotorbikes().remove(motorbike);
-            System.out.println("Motorcycle removed successfully.");
-        } else {
-            System.out.println("Motorcycle not found in catalog.");
+    public void RemoveMotorbike(Catalog catalog, Motorbike motorbike) throws AppException {
+        if (!catalog.getMotorbikes().contains(motorbike)) {
+            throw new AppException("Motorcycle not found in catalog.");
         }
+        catalog.getMotorbikes().remove(motorbike);
+        System.out.println("Motorcycle removed successfully.");
     }
 
     /**

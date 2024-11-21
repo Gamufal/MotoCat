@@ -12,8 +12,11 @@ import java.util.List;
  */
 public class Catalog {  
     
-    private String brand; // The brand of the motorbikes in the catalog
-    private List<Motorbike> Motorbikes = new ArrayList<>(); // List of motorbikes in the catalog
+    /** The brand name of the motorbikes in the catalog. */
+    private String brand;
+    
+    /** A list of motorbikes associated with the brand in this catalog. */
+    private List<Motorbike> motorbikes = new ArrayList<>();
 
     /**
      * Constructs a Catalog with the specified brand name.
@@ -48,7 +51,7 @@ public class Catalog {
      * @return a list of Motorbike objects in the catalog
      */
     public List<Motorbike> getMotorbikes() {
-        return Motorbikes;
+        return motorbikes;
     }
 
     /**
@@ -57,7 +60,7 @@ public class Catalog {
      * @param Motorbikes a list of Motorbike objects to set in the catalog
      */
     public void setMotorbikes(List<Motorbike> Motorbikes) {
-        this.Motorbikes = Motorbikes;
+        this.motorbikes = Motorbikes;
     }
     
 }
