@@ -104,7 +104,7 @@ public class Console {
      * Displays the catalog information, including the brand and list of motorbikes.
      *
      * @param catalog the catalog to display
-     */
+    
     public void displayCatalog(Catalog catalog) {
         System.out.println("Catalog: " + catalog.getBrand());
         if (catalog.getMotorbikes().isEmpty()) {
@@ -115,6 +115,7 @@ public class Console {
             }
         }
     }
+    */
     
     /**
      * Displays a list of motorbikes.

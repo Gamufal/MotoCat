@@ -75,7 +75,7 @@ public class Application {
         loadedMotorbikes.add(pony);
 
         // Setting the loaded motorbikes to the catalog
-        loadedCatalog.setMotorbikes(loadedMotorbikes);
+        loadedCatalog.setMotorbikeList(loadedMotorbikes);
         
         // Initialize controllers
         CatalogManager catalogManager = new CatalogManager();
@@ -99,7 +99,7 @@ public class Application {
             switch(input) {
                 case "1" -> {
                     System.out.println(catalogManager.countMotorbikes(loadedCatalog) + " results");
-                    console.displayCatalog(loadedCatalog);
+                    //console.displayCatalog(loadedCatalog);
                 }
                 case "2" -> {
                     System.out.print("Type model: ");

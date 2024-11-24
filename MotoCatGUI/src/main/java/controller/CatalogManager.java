@@ -23,10 +23,10 @@ public class CatalogManager {
      * @throws AppException if the catalog is empty
      */
     public void clearCatalog(Catalog catalog) throws AppException {
-        if (catalog.getMotorbikes().isEmpty()) {
+        if (catalog.getMotorbikeList().isEmpty()) {
             throw new AppException("Cannot clear catalog because it is empty.");
         }
-        catalog.getMotorbikes().clear();
+        catalog.getMotorbikeList().clear();
         System.out.println("Catalog " + catalog.getBrand() + " cleared.");
     }
     
@@ -37,7 +37,7 @@ public class CatalogManager {
      * @return true if the catalog is empty; false otherwise
      */
     public boolean isCatalogEmpty(Catalog catalog) {
-        return catalog.getMotorbikes().isEmpty();
+        return catalog.getMotorbikeList().isEmpty();
     }
     
     /**
@@ -48,7 +48,7 @@ public class CatalogManager {
      * @return true if the model is found; false otherwise
      */
     public boolean isModelInCatalog(Catalog catalog, String modelName) {
-        for (Motorbike motorbike : catalog.getMotorbikes()) {
+        for (Motorbike motorbike : catalog.getMotorbikeList()) {
             if (motorbike.getModel().equalsIgnoreCase(modelName)) {
                 return true;
             }
@@ -65,7 +65,7 @@ public class CatalogManager {
      */
     public List<Motorbike> findMotorbikesByName(Catalog catalog, String name) {
         List<Motorbike> result = new ArrayList<>();
-        for (Motorbike motorbike : catalog.getMotorbikes()) { 
+        for (Motorbike motorbike : catalog.getMotorbikeList()) { 
             if (motorbike.getModel().toLowerCase().contains(name.toLowerCase())) {
                 result.add(motorbike);
             }
@@ -89,7 +89,7 @@ public class CatalogManager {
      */
     public List<Motorbike> findMotorbikesByParameters(Catalog catalog, double maxPrice, int maxDisplacement, int minPower) {
         List<Motorbike> result = new ArrayList<>();
-        for (Motorbike motorbike : catalog.getMotorbikes()) {
+        for (Motorbike motorbike : catalog.getMotorbikeList()) {
             boolean matches = true;
             if (maxPrice > 0 && motorbike.getPrice() > maxPrice) {
                 matches = false;
@@ -120,7 +120,7 @@ public class CatalogManager {
      * @return the motorbike if found; null otherwise
      */
     public Motorbike getMotorbikeByModel(Catalog catalog, String modelName) {
-        for (Motorbike motorbike : catalog.getMotorbikes()) {
+        for (Motorbike motorbike : catalog.getMotorbikeList()) {
             if (motorbike.getModel().equalsIgnoreCase(modelName)) {
                 return motorbike;
             }
@@ -137,7 +137,7 @@ public class CatalogManager {
      * @param power        the new power value
      */
     public void updateMotorbikeSpecification(Catalog catalog, Motorbike motorbike, int displacement, int power) {
-        if (catalog.getMotorbikes().contains(motorbike)) { 
+        if (catalog.getMotorbikeList().contains(motorbike)) { 
             motorbike.setDisplacement(displacement);
             motorbike.setPower(power);
             System.out.println("Motorcycle specifications updated.");
@@ -154,7 +154,7 @@ public class CatalogManager {
      * @param price the new price value
      */
     public void updateMotorbikePrice(Catalog catalog, Motorbike motorbike, double price) {
-        if (catalog.getMotorbikes().contains(motorbike)) { 
+        if (catalog.getMotorbikeList().contains(motorbike)) { 
             motorbike.setPrice(price);  
             System.out.println("Motorcycle price updated.");
         } else {
@@ -169,10 +169,10 @@ public class CatalogManager {
      * @param motorbike the motorbike to add
      */
     public void AddMotorbike(Catalog catalog, Motorbike motorbike) {
-        if (catalog.getMotorbikes().contains(motorbike)) {
+        if (catalog.getMotorbikeList().contains(motorbike)) {
             System.out.println("This motorcycle is already in the catalog.");
         } else {
-            catalog.getMotorbikes().add(motorbike);
+            catalog.getMotorbikeList().add(motorbike);
             System.out.println("Motorcycle added successfully.");
         }
     }
@@ -185,10 +185,10 @@ public class CatalogManager {
      * @throws AppException if the motorbike is not found in the catalog
      */
     public void RemoveMotorbike(Catalog catalog, Motorbike motorbike) throws AppException {
-        if (!catalog.getMotorbikes().contains(motorbike)) {
+        if (!catalog.getMotorbikeList().contains(motorbike)) {
             throw new AppException("Motorcycle not found in catalog.");
         }
-        catalog.getMotorbikes().remove(motorbike);
+        catalog.getMotorbikeList().remove(motorbike);
         System.out.println("Motorcycle removed successfully.");
     }
 
@@ -199,6 +199,6 @@ public class CatalogManager {
      * @return the number of motorbikes in the catalog
      */
     public int countMotorbikes(Catalog catalog) {
-        return catalog.getMotorbikes().size();
+        return catalog.getMotorbikeList().size();
     }
 }
