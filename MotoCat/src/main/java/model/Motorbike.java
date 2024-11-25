@@ -7,6 +7,8 @@ package model;
  * @author Kamil Kotorc
  * @version 2.1
  */
+
+
 public class Motorbike {
     
      /** The model name of the motorbike. */

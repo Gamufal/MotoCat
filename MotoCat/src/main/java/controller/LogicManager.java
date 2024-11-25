@@ -8,6 +8,8 @@ import model.AppException;
 import model.Catalog;
 import model.Motorbike;
 import view.GUI;
+//lombok
+//rekord
 
 /**
  * The LogicManager class is responsible for handling the business logic of the motorbike catalog application.
@@ -36,9 +38,11 @@ public final class LogicManager {
         gui.setSelectedCatalog(catalog.getBrand());
    
         gui.setClearButtonActionListener(e -> clearModelList());
-        handleMotorbikeSelection(); 
+        handleMotorbikeSelection();
+        
         handleRemoveMotorbike();
         handleAddMotorbike();
+        
         attachMenuClearAction();
         attachMenuRemoveAction();
         attachMenuAddAction();
@@ -48,6 +52,7 @@ public final class LogicManager {
      * Updates the motorbike list in the GUI based on the current motorbikes in the catalog.
      */
     public void updateModelList() {
+        //String[] motorbikeNames;
         List<String> motorbikeNames = new ArrayList<>();
         List<Motorbike> motorbikes = catalog.getMotorbikeList();
         
@@ -136,6 +141,7 @@ public final class LogicManager {
             }
 
             catalog.AddMotorbike(newMotorbike);
+            //String[] motorbikeNames;
             List<String> motorbikeNames = new ArrayList<>();
             
             for (Motorbike motorbike : catalog.getMotorbikeList()) {
@@ -190,6 +196,7 @@ public final class LogicManager {
             Motorbike newMotorbike = gui.getMotorbikeFromInputFields();
             if (newMotorbike != null) {
                 catalog.AddMotorbike(newMotorbike); 
+                //String[] motorbikeNames;
                 List<String> motorbikeNames = new ArrayList<>();
                 for (Motorbike motorbike : catalog.getMotorbikeList()) {
                     motorbikeNames.add(motorbike.getModel());

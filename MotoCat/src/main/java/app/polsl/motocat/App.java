@@ -6,9 +6,12 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import model.Catalog;
-import model.Motorbike;
+import model.LCatalog;
+import model.RMotorbike;
 import view.GUI;
 import controller.LogicManager;
+import model.Motorbike;
+
 
 /**
  * The main class of the Motorcycle Catalog Application.
@@ -60,8 +63,18 @@ public class App {
             }
         }
         
-        // Initialize catalog with given name
-        Catalog loadedCatalog = new Catalog(loadedCatalogName);
+        // Adding sample Rmotorbikes to the catalog
+        List<RMotorbike> loadedRMotorbikes = new ArrayList<>();
+        RMotorbike chart2 = new RMotorbike("Chart2", 30000.00, 750, 21);
+        loadedRMotorbikes.add(chart2);
+        RMotorbike kadet2 = new RMotorbike("Kadet2", 19500.00, 125, 7);
+        loadedRMotorbikes.add(kadet2);
+        RMotorbike pony2 = new RMotorbike("Pony2", 15999.99, 50, 3);
+        loadedRMotorbikes.add(pony2);
+        
+        // Initialize catalog with given name and array list
+        LCatalog loadedCatalog = new LCatalog(loadedCatalogName,loadedRMotorbikes);
+        
         
         // Adding sample motorbikes to the catalog
         List<Motorbike> loadedMotorbikes = new ArrayList<>();
@@ -71,16 +84,16 @@ public class App {
         loadedMotorbikes.add(kadet);
         Motorbike pony = new Motorbike("Pony", 15999.99, 50, 3);
         loadedMotorbikes.add(pony);
-
-        // Setting the loaded motorbikes to the catalog
-        loadedCatalog.setMotorbikeList(loadedMotorbikes);
+        
+        //Initialize catalog with given name and array list
+        Catalog transfer = new Catalog(loadedCatalog.getBrand(),loadedMotorbikes);
 
         // Creating and displaying the form
         java.awt.EventQueue.invokeLater(() -> {
 
             GUI gui = new GUI();
 
-            LogicManager controller = new LogicManager(gui,loadedCatalog);
+            LogicManager controller = new LogicManager(gui,transfer);
             controller.updateModelList();
             
             gui.setVisible(true);

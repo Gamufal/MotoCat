@@ -26,6 +26,18 @@ public class Catalog {
     public Catalog(String brand) {
         this.brand = brand;
     }
+    
+     /**
+     * Constructs a Catalog with the specified brand name.
+     *
+     * @param brand the name of the brand for this catalog
+     * @param motorbikeList the list of motorbikes 
+     */
+    public Catalog(String brand, List<Motorbike> motorbikeList) {
+        this.brand = brand;
+        this.motorbikeList = motorbikeList;
+    }
+
 
     /**
      * Returns the brand of the catalog.
