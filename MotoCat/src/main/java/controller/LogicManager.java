@@ -49,11 +49,13 @@ public final class LogicManager {
      */
     public void updateModelList() {
         List<String> motorbikeNames = new ArrayList<>();
-
+        List<Motorbike> motorbikes = catalog.getMotorbikeList();
+        
         for (Motorbike motorbike : catalog.getMotorbikeList()) {
             motorbikeNames.add(motorbike.getModel());
         }
-
+        
+        gui.updateMotorbikeTable(motorbikes);
         gui.updateMotorbikeList(motorbikeNames);
     }
     
@@ -125,22 +127,24 @@ public final class LogicManager {
      */
     public void handleAddMotorbike() {
         gui.setAddButtonListener(e -> {
-            try {
-                Motorbike newMotorbike = gui.getMotorbikeFromInputFields();
-                if (newMotorbike == null) {
-                    throw new AppException("Invalid input. Please enter correct values.");
-                }
-
-                catalog.AddMotorbike(newMotorbike);
-                List<String> motorbikeNames = new ArrayList<>();
-                for (Motorbike motorbike : catalog.getMotorbikeList()) {
-                    motorbikeNames.add(motorbike.getModel());
-                }
-                gui.updateMotorbikeList(motorbikeNames);
-                gui.clearInputFields();
-                JOptionPane.showMessageDialog(gui, "Motorbike added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-            } catch (AppException ex) {
+            
+            Motorbike newMotorbike = gui.getMotorbikeFromInputFields();
+                
+            if (!newMotorbike.validateData()) {
+                JOptionPane.showMessageDialog(gui, "Please enter correct values!", "Information", JOptionPane.INFORMATION_MESSAGE);
+                return;
             }
+
+            catalog.AddMotorbike(newMotorbike);
+            List<String> motorbikeNames = new ArrayList<>();
+            
+            for (Motorbike motorbike : catalog.getMotorbikeList()) {
+                motorbikeNames.add(motorbike.getModel());
+            }
+            
+            gui.updateMotorbikeList(motorbikeNames);
+            gui.clearInputFields();
+            JOptionPane.showMessageDialog(gui, "Motorbike added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
         });
     }
     
@@ -196,5 +200,7 @@ public final class LogicManager {
             }
         });
     }
+    
+    
         
 }

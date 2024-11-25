@@ -114,11 +114,22 @@ public class Motorbike {
      * @return true if the motorbike data is valid, false otherwise
      */
     public boolean validateData() {
-        return model != null 
-                && model.isEmpty() 
-                && price > 0 
-                && displacement > 0 
-                && power > 0;
+        try{
+            if(model == null){
+                throw new AppException("Invalid input. Model name cannot be empty.");
+            } else if (model.isEmpty()) {
+                throw new AppException("Invalid input. Model name cannot be empty.");
+            } else if (price < 0){
+                throw new AppException("Invalid input. Price cannot be less than 0.");
+            } else if (displacement < 1){
+                throw new AppException("Invalid input. Displacement cannot be less than 0.");
+            } else if (power < 1){
+                throw new AppException("Invalid input. Power cannot be less than 0.");
+            }
+        }catch(AppException e){
+            return false;
+        }
+        return true;
     }
     
 }
