@@ -493,7 +493,7 @@ public class GUI extends javax.swing.JFrame {
         tableModel.setRowCount(0);
         
         for (Motorbike motorbike : motorbikes) {
-            tableModel.addRow(new Object[]{motorbike.getModel(), motorbike.getPrice()});
+            tableModel.addRow(new Object[]{motorbike.model(), motorbike.price()});
         }
     }
     

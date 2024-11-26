@@ -5,20 +5,18 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import model.Motorbike;
 import model.Catalog;
-import model.LCatalog;
-import model.RMotorbike;
+import model.CatalogBook;
 import view.GUI;
 import controller.LogicManager;
-import model.Motorbike;
-
 
 /**
  * The main class of the Motorcycle Catalog Application.
  *
  * This class contains the main method, which serves as the entry point of the application.
  *
- * @version 2.1
+ * @version 3.0
  * @author Kamil Kotorc
  *
  */
@@ -57,24 +55,11 @@ public class App {
                 "Catalog Name", 
                 JOptionPane.QUESTION_MESSAGE
             );
-
             if (loadedCatalogName == null || loadedCatalogName.trim().isEmpty()) {
                 loadedCatalogName = "Default Catalog";
             }
+            
         }
-        
-        // Adding sample Rmotorbikes to the catalog
-        List<RMotorbike> loadedRMotorbikes = new ArrayList<>();
-        RMotorbike chart2 = new RMotorbike("Chart2", 30000.00, 750, 21);
-        loadedRMotorbikes.add(chart2);
-        RMotorbike kadet2 = new RMotorbike("Kadet2", 19500.00, 125, 7);
-        loadedRMotorbikes.add(kadet2);
-        RMotorbike pony2 = new RMotorbike("Pony2", 15999.99, 50, 3);
-        loadedRMotorbikes.add(pony2);
-        
-        // Initialize catalog with given name and array list
-        LCatalog loadedCatalog = new LCatalog(loadedCatalogName,loadedRMotorbikes);
-        
         
         // Adding sample motorbikes to the catalog
         List<Motorbike> loadedMotorbikes = new ArrayList<>();
@@ -85,7 +70,10 @@ public class App {
         Motorbike pony = new Motorbike("Pony", 15999.99, 50, 3);
         loadedMotorbikes.add(pony);
         
-        //Initialize catalog with given name and array list
+        // Initialize catalog book with given name and array list
+        CatalogBook loadedCatalog = new CatalogBook(loadedCatalogName,loadedMotorbikes);
+        
+        // Initialize catalog with given name and array list
         Catalog transfer = new Catalog(loadedCatalog.getBrand(),loadedMotorbikes);
 
         // Creating and displaying the form

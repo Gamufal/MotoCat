@@ -8,7 +8,7 @@ import java.util.List;
  * The catalog contains information about the brand and a list of motorbikes.
  * 
  * @author Kamil Kotorc
- * @version 2.1
+ * @version 3.0
  */
 public class Catalog {  
     
@@ -83,7 +83,7 @@ public class Catalog {
      */
     public Motorbike getMotorbikeByModel(String modelName) {
         for (Motorbike motorbike : motorbikeList) {
-            if (motorbike.getModel().equals(modelName)) {
+            if (motorbike.model().equals(modelName)) {
                 return motorbike;
             }
         }

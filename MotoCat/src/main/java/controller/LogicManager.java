@@ -8,8 +8,6 @@ import model.AppException;
 import model.Catalog;
 import model.Motorbike;
 import view.GUI;
-//lombok
-//rekord
 
 /**
  * The LogicManager class is responsible for handling the business logic of the motorbike catalog application.
@@ -17,7 +15,7 @@ import view.GUI;
  * It handles events such as adding, removing, selecting motorbikes, and clearing the catalog.
  * 
  * @author Kamil Kotorc
- * @version 2.1
+ * @version 3.0
  */
 public final class LogicManager {
     
@@ -57,7 +55,7 @@ public final class LogicManager {
         List<Motorbike> motorbikes = catalog.getMotorbikeList();
         
         for (Motorbike motorbike : catalog.getMotorbikeList()) {
-            motorbikeNames.add(motorbike.getModel());
+            motorbikeNames.add(motorbike.model());
         }
         
         gui.updateMotorbikeTable(motorbikes);
@@ -92,10 +90,10 @@ public final class LogicManager {
                     Motorbike selectedMotorbike = catalog.getMotorbikeList().get(selectedIndex);
                     gui.updateSelectedMotorbikeDetails(
                             catalog.getBrand(),
-                            selectedMotorbike.getModel(),
-                            String.valueOf(selectedMotorbike.getPrice()),
-                            String.valueOf(selectedMotorbike.getDisplacement()),
-                            String.valueOf(selectedMotorbike.getPower())
+                            selectedMotorbike.model(),
+                            String.valueOf(selectedMotorbike.price()),
+                            String.valueOf(selectedMotorbike.displacement()),
+                            String.valueOf(selectedMotorbike.power())
                     );
                 } else {
                     gui.clearSelectedMotorbikeDetails();
@@ -145,7 +143,7 @@ public final class LogicManager {
             List<String> motorbikeNames = new ArrayList<>();
             
             for (Motorbike motorbike : catalog.getMotorbikeList()) {
-                motorbikeNames.add(motorbike.getModel());
+                motorbikeNames.add(motorbike.model());
             }
             
             gui.updateMotorbikeList(motorbikeNames);
@@ -199,7 +197,7 @@ public final class LogicManager {
                 //String[] motorbikeNames;
                 List<String> motorbikeNames = new ArrayList<>();
                 for (Motorbike motorbike : catalog.getMotorbikeList()) {
-                    motorbikeNames.add(motorbike.getModel());
+                    motorbikeNames.add(motorbike.model());
                 }
                 gui.updateMotorbikeList(motorbikeNames);
                 gui.clearInputFields();

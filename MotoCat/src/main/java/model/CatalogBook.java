@@ -10,19 +10,17 @@ import lombok.*;
  * The catalog contains information about the brand and a list of motorbikes.
  * 
  * @author Kamil Kotorc
- * @version 2.1
+ * @version 3.0
  */
 
-/**
- * Lombok version B
- */
+//Lombok version B
 @AllArgsConstructor
 @Data  //replaces @Getter @Setter @RequiredArgsConstructor @ToString @EqualsAndHashCode. 
-public class LCatalog {  
+public class CatalogBook {  
     
     
     private String brand;
-    private List<RMotorbike> motorbikeList = new ArrayList<>();
+    private List<Motorbike> motorbikeList = new ArrayList<>();
     
     
     
@@ -32,8 +30,8 @@ public class LCatalog {
      * @param modelName the model name of the motorbike to retrieve
      * @return the motorbike if found; null otherwise
      */
-    public RMotorbike getMotorbikeByModel(String modelName) {
-        for (RMotorbike motorbike : motorbikeList) {
+    public Motorbike getMotorbikeByModel(String modelName) {
+        for (Motorbike motorbike : motorbikeList) {
             if (motorbike.model().equals(modelName)) {
                 return motorbike;
             }
@@ -46,7 +44,7 @@ public class LCatalog {
      *
      * @param motorbike the motorbike to add to the list
      */
-    public void AddMotorbike(RMotorbike motorbike) {
+    public void AddMotorbike(Motorbike motorbike) {
         if (!motorbikeList.contains(motorbike)) {
             motorbikeList.add(motorbike);  
         }
@@ -57,7 +55,7 @@ public class LCatalog {
      *
      * @param motorbike the motorbike to remove
      */
-    public void RemoveMotorbike(RMotorbike motorbike){
+    public void RemoveMotorbike(Motorbike motorbike){
         if (motorbikeList.contains(motorbike)) {
         motorbikeList.remove(motorbike);
         }

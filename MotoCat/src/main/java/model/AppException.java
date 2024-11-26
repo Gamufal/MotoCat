@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
  * It is used for signaling errors that occur during the execution of the application.
  * 
  * @author Kamil Kotorc
- * @version 2.1
+ * @version 3.0
  */
 public class AppException extends Exception {
 
