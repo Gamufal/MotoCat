@@ -16,10 +16,19 @@ import controller.LogicManager;
  *
  * This class contains the main method, which serves as the entry point of the application.
  *
- * @version 3.0
+ * @version 3.1
  * @author Kamil Kotorc
  *
  */
+
+// - kolekcja bezpieczna typów
+// - dodanie 1 z 5 elementów
+// - strumienie
+
+// - dokończenie testów katalogu
+// - zrobienie testów motocykla
+// - weryfikacja spełnienia wymagań testów
+
 public class App {
     
     /**
@@ -43,6 +52,7 @@ public class App {
             java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         
+        
         // Check if catalog name is provided as a command-line argument
         // If not, question the user to enter a catalog name
         String loadedCatalogName;
@@ -65,10 +75,14 @@ public class App {
         List<Motorbike> loadedMotorbikes = new ArrayList<>();
         Motorbike chart = new Motorbike("Chart", 30000.00, 750, 21);
         loadedMotorbikes.add(chart);
-        Motorbike kadet = new Motorbike("Kadet", 19500.00, 125, 7);
+        Motorbike kadet = new Motorbike("Kadet", 19400.00, 125, 7);
         loadedMotorbikes.add(kadet);
-        Motorbike pony = new Motorbike("Pony", 15999.99, 50, 3);
+        Motorbike pony = new Motorbike("Pony", 11999.99, 50, 3);
         loadedMotorbikes.add(pony);
+        Motorbike simson = new Motorbike("Simson", 26600.00, 125, 12);
+        loadedMotorbikes.add(simson);
+        Motorbike ogar = new Motorbike("Ogar", 15555.50, 50, 5);
+        loadedMotorbikes.add(ogar);
         
         // Initialize catalog book with given name and array list
         CatalogBook loadedCatalog = new CatalogBook(loadedCatalogName,loadedMotorbikes);

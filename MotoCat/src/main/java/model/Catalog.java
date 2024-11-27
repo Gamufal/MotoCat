@@ -4,18 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Represents a catalog of motorbikes for a specific brand.
- * The catalog contains information about the brand and a list of motorbikes.
- * 
+ * Represents a catalog of motorbikes for a specific brand. The catalog contains
+ * information about the brand and a list of motorbikes.
+ *
  * @author Kamil Kotorc
- * @version 3.0
+ * @version 3.1
  */
-public class Catalog {  
-    
-    /** The brand name of the motorbikes in the catalog. */
+public class Catalog {
+
+    /**
+     * The brand name of the motorbikes in the catalog.
+     */
     private String brand;
-    
-    /** A list of motorbikes associated with the brand in this catalog. */
+
+    /**
+     * A list of motorbikes associated with the brand in this catalog.
+     */
     private List<Motorbike> motorbikeList = new ArrayList<>();
 
     /**
@@ -26,18 +30,17 @@ public class Catalog {
     public Catalog(String brand) {
         this.brand = brand;
     }
-    
-     /**
+
+    /**
      * Constructs a Catalog with the specified brand name.
      *
      * @param brand the name of the brand for this catalog
-     * @param motorbikeList the list of motorbikes 
+     * @param motorbikeList the list of motorbikes
      */
     public Catalog(String brand, List<Motorbike> motorbikeList) {
         this.brand = brand;
         this.motorbikeList = motorbikeList;
     }
-
 
     /**
      * Returns the brand of the catalog.
@@ -74,53 +77,52 @@ public class Catalog {
     public void setMotorbikeList(List<Motorbike> motorbikes) {
         this.motorbikeList = motorbikes;
     }
-    
-     /**
-     * Retrieves a motorbike from the catalog by its model name.
-     *
-     * @param modelName the model name of the motorbike to retrieve
-     * @return the motorbike if found; null otherwise
-     */
-    public Motorbike getMotorbikeByModel(String modelName) {
-        for (Motorbike motorbike : motorbikeList) {
-            if (motorbike.model().equals(modelName)) {
-                return motorbike;
-            }
-        }
-        return null; 
-    }
-    
+
+    // custom methods 
     /**
      * Adds a new motorbike to the catalog.
      *
      * @param motorbike the motorbike to add to the list
      */
-    public void AddMotorbike(Motorbike motorbike) {
+    public void addMotorbike(Motorbike motorbike) {
         if (!motorbikeList.contains(motorbike)) {
-            motorbikeList.add(motorbike);  
+            motorbikeList.add(motorbike);
         }
     }
-    
+
     /**
      * Removes a motorbike from the catalog.
      *
      * @param motorbike the motorbike to remove
      */
-    public void RemoveMotorbike(Motorbike motorbike){
+    public void removeMotorbike(Motorbike motorbike) {
         if (motorbikeList.contains(motorbike)) {
-        motorbikeList.remove(motorbike);
+            motorbikeList.remove(motorbike);
         }
     }
-    
+
     /**
-     * Clears all motorbikes in motorbike list
+     * Edits the motorbike in the catalog.
+     *
+     * @param oldMotorbike the motorbike to edit
+     * @param newMotorbike the motorbike with new parameters
      */
-    public void clearCatalog(){
-        if (!motorbikeList.isEmpty()) {
-           motorbikeList.clear();
+    public void editMotorbike(Motorbike oldMotorbike, Motorbike newMotorbike) {
+        int index = motorbikeList.indexOf(oldMotorbike);
+        if (index != -1) {
+            motorbikeList.set(index, newMotorbike);
         }
     }
-    
+
+    /**
+     * Clears all motorbikes in motorbike list if it`s not already empty
+     */
+    public void clearCatalog() {
+        if (!motorbikeList.isEmpty()) {
+            motorbikeList.clear();
+        }
+    }
+
     /**
      * Checks if the specified catalog is empty.
      *
@@ -129,14 +131,5 @@ public class Catalog {
     public boolean isCatalogEmpty() {
         return motorbikeList.isEmpty();
     }
-    
-    /**
-     * Counts the total number of motorbikes in the specified catalog.
-     *
-     * @return the number of motorbikes in the catalog
-     */
-    public int countMotorbikes() {
-        return motorbikeList.size();
-    }
-    
+
 }

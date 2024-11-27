@@ -9,7 +9,7 @@ import model.Motorbike;
  * The GUI class represents the graphical user interface of the Motorcycle Catalog application.
  * It is responsible for displaying the catalog, handling user interactions, and updating the view.
  * 
- * @version 2.1
+ * @version 3.0
  * @author Kamil Kotorc
  */
 public class GUI extends javax.swing.JFrame {
@@ -33,18 +33,18 @@ public class GUI extends javax.swing.JFrame {
         catalogLabel = new javax.swing.JLabel();
         selectedCatalog = new javax.swing.JLabel();
         leftPanel = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        modelTable = new javax.swing.JTable();
         scrollPane = new javax.swing.JScrollPane();
         modelList = new javax.swing.JList<>();
+        titleLabel2 = new javax.swing.JLabel();
         selectedModel = new javax.swing.JLabel();
         selectedPrice = new javax.swing.JLabel();
         selectedDisplacement = new javax.swing.JLabel();
         selectedPower = new javax.swing.JLabel();
         clearButton = new javax.swing.JButton();
         removeButton = new javax.swing.JButton();
-        titleLabel2 = new javax.swing.JLabel();
         editButton = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        modelTable = new javax.swing.JTable();
         rightPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         inputModel = new javax.swing.JTextField();
@@ -63,22 +63,49 @@ public class GUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("MotoCat");
-        setMaximumSize(new java.awt.Dimension(1280, 720));
         setMinimumSize(new java.awt.Dimension(640, 360));
-        setPreferredSize(new java.awt.Dimension(640, 420));
 
         titleLabel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         titleLabel.setText("Motorcycle Catalog Application");
 
         catalogLabel.setText("Catalog:");
 
-        selectedCatalog.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        selectedCatalog.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
         selectedCatalog.setText("defaultCatalog");
 
         leftPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Browse"));
         leftPanel.setToolTipText("Motorcycles");
         leftPanel.setMaximumSize(new java.awt.Dimension(304, 304));
         leftPanel.setMinimumSize(new java.awt.Dimension(300, 300));
+
+        modelTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Model", "Price"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Double.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        modelTable.setShowGrid(true);
+        jScrollPane1.setViewportView(modelTable);
 
         modelList.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3" };
@@ -88,6 +115,8 @@ public class GUI extends javax.swing.JFrame {
         modelList.setToolTipText("Select motorcycle");
         modelList.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         scrollPane.setViewportView(modelList);
+
+        titleLabel2.setText("Selected motorcycle details:");
 
         selectedModel.setText("Model");
         selectedModel.setToolTipText("Motorcycle model name");
@@ -113,30 +142,7 @@ public class GUI extends javax.swing.JFrame {
         removeButton.setToolTipText("Remove motorcycle");
         removeButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        titleLabel2.setText("Selected motorcycle details:");
-
         editButton.setText("Edit");
-
-        modelTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
-            },
-            new String [] {
-                "Model", "Price"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Double.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(modelTable);
 
         javax.swing.GroupLayout leftPanelLayout = new javax.swing.GroupLayout(leftPanel);
         leftPanel.setLayout(leftPanelLayout);
@@ -156,12 +162,10 @@ public class GUI extends javax.swing.JFrame {
                             .addComponent(selectedPrice)
                             .addComponent(selectedDisplacement)
                             .addComponent(selectedPower)
-                            .addGroup(leftPanelLayout.createSequentialGroup()
-                                .addComponent(removeButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(editButton))))
+                            .addComponent(removeButton)
+                            .addComponent(editButton)))
                     .addComponent(clearButton))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(10, Short.MAX_VALUE))
         );
         leftPanelLayout.setVerticalGroup(
             leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -169,7 +173,7 @@ public class GUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(leftPanelLayout.createSequentialGroup()
-                        .addGroup(leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(scrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(leftPanelLayout.createSequentialGroup()
                                 .addComponent(titleLabel2)
@@ -182,13 +186,13 @@ public class GUI extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(selectedPower)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(removeButton)
-                                    .addComponent(editButton))))
+                                .addComponent(editButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                                .addComponent(removeButton)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(clearButton))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(210, Short.MAX_VALUE))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
 
         rightPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Add"));
@@ -352,15 +356,6 @@ public class GUI extends javax.swing.JFrame {
     }
 
     /**
-     * Sets the action listener for the clear button. This listener will be triggered when the button is clicked.
-     *
-     * @param actionListener the action listener to be set for the clear button.
-     */
-    public void setClearButtonActionListener(java.awt.event.ActionListener actionListener) {
-        clearButton.addActionListener(actionListener);
-    }
-
-    /**
      * Sets the list selection listener for the motorbike list. This listener will be triggered when a selection
      * in the list is made.
      *
@@ -497,10 +492,18 @@ public class GUI extends javax.swing.JFrame {
         }
     }
     
-    public void setEditButtonActionListener(java.awt.event.ActionListener actionListener) {
-        editButton.addActionListener(actionListener);
+    public void setEditButtonListener(java.awt.event.ActionListener listener) {
+        editButton.addActionListener(listener);
     }
-
+    
+    /**
+     * Sets the action listener for the clear button. This listener will be triggered when the button is clicked.
+     *
+     * @param actionListener the action listener to be set for the clear button.
+     */
+    public void setClearButtonActionListener(java.awt.event.ActionListener actionListener) {
+        clearButton.addActionListener(actionListener);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;

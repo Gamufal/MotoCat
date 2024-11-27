@@ -2,7 +2,10 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import model.AppException;
 
 import model.Catalog;
@@ -40,6 +43,7 @@ public final class LogicManager {
         
         handleRemoveMotorbike();
         handleAddMotorbike();
+        handleEditMotorbike();
         
         attachMenuClearAction();
         attachMenuRemoveAction();
@@ -75,7 +79,6 @@ public final class LogicManager {
         }else{
             JOptionPane.showMessageDialog(gui, "Catalog is already empty!", "Error", JOptionPane.ERROR_MESSAGE);
         }
-        
     }
     
     /**
@@ -115,7 +118,7 @@ public final class LogicManager {
                 }
 
                 Motorbike motorbikeToRemove = catalog.getMotorbikeList().get(selectedIndex);
-                catalog.RemoveMotorbike(motorbikeToRemove);
+                catalog.removeMotorbike(motorbikeToRemove);
                 updateModelList();
                 gui.clearSelectedMotorbikeDetails();
                 JOptionPane.showMessageDialog(gui, "Motorbike has been removed!", "Information", JOptionPane.INFORMATION_MESSAGE);
@@ -138,8 +141,7 @@ public final class LogicManager {
                 return;
             }
 
-            catalog.AddMotorbike(newMotorbike);
-            //String[] motorbikeNames;
+            catalog.addMotorbike(newMotorbike);
             List<String> motorbikeNames = new ArrayList<>();
             
             for (Motorbike motorbike : catalog.getMotorbikeList()) {
@@ -149,6 +151,65 @@ public final class LogicManager {
             gui.updateMotorbikeList(motorbikeNames);
             gui.clearInputFields();
             JOptionPane.showMessageDialog(gui, "Motorbike added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+        });
+    }
+    
+    /**
+     * Handles the action of editing a selected motorbike from the catalog.
+     * If the input fields are invalid or empty, an error message is shown.
+     */
+    public void handleEditMotorbike() {
+        gui.setEditButtonListener(e -> {
+            
+            int selectedIndex = gui.getSelectedMotorbikeIndex();
+            if (selectedIndex < 0) {
+                JOptionPane.showMessageDialog(gui, "Please select a motorbike to edit!", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            
+            Motorbike toEditMotorbike = catalog.getMotorbikeList().get(selectedIndex);
+            
+            JTextField modelField = new JTextField(toEditMotorbike.model());
+            JTextField priceField = new JTextField(String.valueOf(toEditMotorbike.price()));
+            JTextField displacementField = new JTextField(String.valueOf(toEditMotorbike.displacement()));
+            JTextField powerField = new JTextField(String.valueOf(toEditMotorbike.power()));
+
+            JPanel panel = new JPanel();
+            panel.setLayout(new java.awt.GridLayout(4, 2, 5, 5));
+            panel.add(new JLabel("Model:"));
+            panel.add(modelField);
+            panel.add(new JLabel("Price:"));
+            panel.add(priceField);
+            panel.add(new JLabel("Displacement:"));
+            panel.add(displacementField);
+            panel.add(new JLabel("Power:"));
+            panel.add(powerField);
+
+            int result = JOptionPane.showConfirmDialog(
+                gui,
+                panel,
+                "Edit Motorbike",
+                JOptionPane.OK_CANCEL_OPTION,
+                JOptionPane.PLAIN_MESSAGE
+            );
+
+            if (result == JOptionPane.OK_OPTION) {
+                try {
+                    String newModel = modelField.getText();
+                    double newPrice = Double.parseDouble(priceField.getText());
+                    int newDisplacement = Integer.parseInt(displacementField.getText());
+                    int newPower = Integer.parseInt(powerField.getText());
+
+                    Motorbike updatedMotorbike = new Motorbike(newModel, newPrice, newDisplacement, newPower);
+
+                    catalog.editMotorbike(toEditMotorbike, updatedMotorbike);
+
+                    updateModelList();
+                    gui.clearSelectedMotorbikeDetails();
+                    JOptionPane.showMessageDialog(gui, "Motorbike has been edited successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(gui, "Invalid number format. Please enter valid numeric values.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
         });
     }
     
@@ -174,7 +235,7 @@ public final class LogicManager {
             int selectedIndex = gui.getSelectedMotorbikeIndex();
             if (selectedIndex >= 0) {
                 Motorbike motorbikeToRemove = catalog.getMotorbikeList().get(selectedIndex);
-                catalog.RemoveMotorbike(motorbikeToRemove);
+                catalog.removeMotorbike(motorbikeToRemove);
                 updateModelList();
                 gui.clearSelectedMotorbikeDetails();
                 JOptionPane.showMessageDialog(gui, "Motorbike has been removed!", "Information", JOptionPane.INFORMATION_MESSAGE);
@@ -193,8 +254,7 @@ public final class LogicManager {
         gui.setMenuAddActionListener(e -> {
             Motorbike newMotorbike = gui.getMotorbikeFromInputFields();
             if (newMotorbike != null) {
-                catalog.AddMotorbike(newMotorbike); 
-                //String[] motorbikeNames;
+                catalog.addMotorbike(newMotorbike); 
                 List<String> motorbikeNames = new ArrayList<>();
                 for (Motorbike motorbike : catalog.getMotorbikeList()) {
                     motorbikeNames.add(motorbike.model());
