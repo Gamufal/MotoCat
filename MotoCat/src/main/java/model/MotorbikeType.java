@@ -21,11 +21,7 @@ public enum MotorbikeType {
     public static MotorbikeType fromString(String value) {
         return MotorbikeType.valueOf(value.toUpperCase());
     }
-    
-    /**
-     * list
-     * @return list
-     */
+
     public static Vector<String> getFormattedValues() {
         Vector<String> formattedValues = new Vector<>();
         for (MotorbikeType type : MotorbikeType.values()) {

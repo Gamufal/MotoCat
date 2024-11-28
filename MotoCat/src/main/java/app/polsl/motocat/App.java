@@ -93,11 +93,10 @@ public class App {
         java.awt.EventQueue.invokeLater(() -> {
 
             GUI gui = new GUI();
-
-            LogicManager controller = new LogicManager(gui,transfer);
-            controller.updateModelList();
-            
             gui.setVisible(true);
+            
+            LogicManager controller = new LogicManager(gui,transfer);
+            
         });
         
     }
