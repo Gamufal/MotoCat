@@ -6,7 +6,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import model.Motorbike;
-import static model.Motorbike.Type.*;
+import static model.MotorbikeType.*;
 import model.Catalog;
 import model.CatalogBook;
 import view.GUI;
@@ -21,10 +21,7 @@ import controller.LogicManager;
  * @author Kamil Kotorc
  *
  */
-// - zamiana listy na tabelkę
 
-// - kolekcja bezpieczna typów
-// - dodanie 1 z 5 elementów
 // - strumienie
 
 // - dokończenie testów katalogu

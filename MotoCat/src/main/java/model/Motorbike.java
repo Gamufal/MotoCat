@@ -7,11 +7,7 @@ package model;
  * @author Kamil Kotorc
  * @version 3.1
  */
-public record Motorbike(String model, double price, int displacement, int power, Type type) {
-
-    public enum Type {
-        STANDARD, SPORT, CRUISER, TOURING, ENDURO
-    }
+public record Motorbike(String model, double price, int displacement, int power, MotorbikeType type) {
     
     /**
      * Validates the motorbike's fields to ensure they meet specified constraints.
