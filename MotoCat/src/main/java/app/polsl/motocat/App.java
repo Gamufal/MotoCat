@@ -6,6 +6,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import model.Motorbike;
+import static model.Motorbike.Type.*;
 import model.Catalog;
 import model.CatalogBook;
 import view.GUI;
@@ -20,6 +21,7 @@ import controller.LogicManager;
  * @author Kamil Kotorc
  *
  */
+// - zamiana listy na tabelkę
 
 // - kolekcja bezpieczna typów
 // - dodanie 1 z 5 elementów
@@ -73,22 +75,22 @@ public class App {
         
         // Adding sample motorbikes to the catalog
         List<Motorbike> loadedMotorbikes = new ArrayList<>();
-        Motorbike chart = new Motorbike("Chart", 30000.00, 750, 21);
+        Motorbike chart = new Motorbike("Chart", 30000.00, 750, 21, SPORT);
         loadedMotorbikes.add(chart);
-        Motorbike kadet = new Motorbike("Kadet", 19400.00, 125, 7);
+        Motorbike kadet = new Motorbike("Kadet", 19400.00, 125, 7 , STANDARD);
         loadedMotorbikes.add(kadet);
-        Motorbike pony = new Motorbike("Pony", 11999.99, 50, 3);
+        Motorbike pony = new Motorbike("Pony", 11999.99, 50, 3, ENDURO);
         loadedMotorbikes.add(pony);
-        Motorbike simson = new Motorbike("Simson", 26600.00, 125, 12);
+        Motorbike simson = new Motorbike("Simson", 26600.00, 125, 12, CRUISER);
         loadedMotorbikes.add(simson);
-        Motorbike ogar = new Motorbike("Ogar", 15555.50, 50, 5);
+        Motorbike ogar = new Motorbike("Ogar", 15555.50, 50, 5, STANDARD);
         loadedMotorbikes.add(ogar);
         
         // Initialize catalog book with given name and array list
         CatalogBook loadedCatalog = new CatalogBook(loadedCatalogName,loadedMotorbikes);
         
         // Initialize catalog with given name and array list
-        Catalog transfer = new Catalog(loadedCatalog.getBrand(),loadedMotorbikes);
+        Catalog transfer = new Catalog(loadedCatalog.getBrand(),loadedCatalog.getMotorbikeList());
 
         // Creating and displaying the form
         java.awt.EventQueue.invokeLater(() -> {
