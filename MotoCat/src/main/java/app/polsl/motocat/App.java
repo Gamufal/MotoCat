@@ -96,6 +96,8 @@ public class App {
             gui.setVisible(true);
             
             LogicManager controller = new LogicManager(gui,transfer);
+            controller.attachValuesToComponents();
+            controller.updateMotorbikeTable();
             
         });
         
