@@ -1,6 +1,8 @@
 package model;
 
+import java.util.Arrays;
 import java.util.Vector;
+import java.util.stream.Collectors;
 
 /**
  * Enum representing the different types of motorbikes.
@@ -23,13 +25,12 @@ public enum MotorbikeType {
     }
 
     public static Vector<String> getFormattedValues() {
-        Vector<String> formattedValues = new Vector<>();
-        for (MotorbikeType type : MotorbikeType.values()) {
-            String name = type.name();
-            formattedValues.add(name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase());
-        }
-        return formattedValues;
+        return Arrays.stream(MotorbikeType.values())
+                .map(type -> {                           
+                    String name = type.name();
+                    return name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
+                })
+                .collect(Collectors.toCollection(Vector::new));
     }
-
 
 }
