@@ -1,13 +1,16 @@
 package view;
 
-import java.util.Arrays;
+import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Vector;
+
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 /**
  * The GUI class represents the graphical user interface of the Motorcycle Catalog application.
@@ -65,8 +68,8 @@ public class GUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("MotoCat");
-        setMinimumSize(new java.awt.Dimension(800, 400));
-        setPreferredSize(new java.awt.Dimension(860, 430));
+        setMinimumSize(new java.awt.Dimension(860, 410));
+        setPreferredSize(new java.awt.Dimension(870, 420));
 
         titleLabel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         titleLabel.setText("Motorcycle Catalog Application");
@@ -85,25 +88,6 @@ public class GUI extends javax.swing.JFrame {
 
         motoTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
                 {null, null, null, null, null}
             },
             new String [] {
@@ -207,7 +191,7 @@ public class GUI extends javax.swing.JFrame {
         inputPower.setMinimumSize(new java.awt.Dimension(100, 22));
         inputPower.setPreferredSize(new java.awt.Dimension(100, 22));
 
-        jLabel5.setText("Type:");
+        jLabel5.setText("Motocycle type:");
 
         inputTypeBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2" }));
 
@@ -334,7 +318,7 @@ public class GUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
-    // MESSAGE BOX
+    // DIALOGS
     
     public void showMessage(String message) {
         JOptionPane.showMessageDialog(this, message, "Information", JOptionPane.INFORMATION_MESSAGE);
@@ -353,6 +337,45 @@ public class GUI extends javax.swing.JFrame {
                 JOptionPane.QUESTION_MESSAGE
             );
         return option == JOptionPane.OK_OPTION;
+    }
+    
+    public Map<String, String> showEditMessage(String title, String model, double price, int displacement, int power) {
+        JTextField modelField = new JTextField(model);
+        JTextField priceField = new JTextField(String.valueOf(price));
+        JTextField displacementField = new JTextField(String.valueOf(displacement));
+        JTextField powerField = new JTextField(String.valueOf(power));
+
+        JPanel panel = new JPanel();
+        panel.setLayout(new java.awt.GridLayout(4, 2, 5, 5));
+        panel.add(new JLabel("Model:"));
+        panel.add(modelField);
+        panel.add(new JLabel("Price:"));
+        panel.add(priceField);
+        panel.add(new JLabel("Displacement:"));
+        panel.add(displacementField);
+        panel.add(new JLabel("Power:"));
+        panel.add(powerField);
+        
+        int option = JOptionPane.showConfirmDialog(
+                this,
+                panel,
+                title,
+                JOptionPane.OK_CANCEL_OPTION,
+                JOptionPane.PLAIN_MESSAGE
+            );
+        
+        if(option == JOptionPane.OK_OPTION){ 
+            Map<String, String> fieldValues = new HashMap<>();
+            
+            fieldValues.put("model", modelField.getText());
+            fieldValues.put("price", priceField.getText());
+            fieldValues.put("displacement", displacementField.getText());
+            fieldValues.put("power", powerField.getText());   
+            
+            return fieldValues;
+        }
+        
+        return null;
     }
     
     // METHODS
