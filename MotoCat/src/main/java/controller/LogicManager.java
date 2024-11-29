@@ -16,7 +16,7 @@ import view.GUI;
  * It handles events such as adding, removing, selecting motorbikes, and clearing the catalog.
  * 
  * @author Kamil Kotorc
- * @version 3.0
+ * @version 3.1
  */
 public final class LogicManager {
     

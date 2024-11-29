@@ -16,7 +16,7 @@ import javax.swing.JTextField;
  * The GUI class represents the graphical user interface of the Motorcycle Catalog application.
  * It is responsible for displaying the catalog, handling user interactions, and updating the view.
  * 
- * @version 3.0
+ * @version 3.1
  * @author Kamil Kotorc
  */
 public class GUI extends javax.swing.JFrame {
