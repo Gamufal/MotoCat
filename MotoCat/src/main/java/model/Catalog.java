@@ -78,27 +78,32 @@ public class Catalog {
         this.motorbikeList = motorbikes;
     }
 
-    // custom methods 
-    /**
-     * Adds a new motorbike to the catalog.
-     *
-     * @param motorbike the motorbike to add to the list
-     */
-    public void addMotorbike(Motorbike motorbike) {
-        if (!motorbikeList.contains(motorbike)) {
-            motorbikeList.add(motorbike);
-        }
-    }
-
+    // METHODS
+    
     /**
      * Removes a motorbike from the catalog.
      *
      * @param motorbike the motorbike to remove
+     * @throws AppException if there is no motorbike in catalog
      */
-    public void removeMotorbike(Motorbike motorbike) {
-        if (motorbikeList.contains(motorbike)) {
-            motorbikeList.remove(motorbike);
+    public void removeMotorbike(Motorbike motorbike) throws AppException {
+        if (!motorbikeList.contains(motorbike)) {
+            throw new AppException("No motorbike in catalog");
         }
+        motorbikeList.remove(motorbike);
+    }
+    
+    /**
+     * Adds a new motorbike to the catalog.
+     *
+     * @param motorbike the motorbike to add to the list
+     * @throws AppException if motorbike already exist in catalog
+     */
+    public void addMotorbike(Motorbike motorbike) throws AppException {
+        if (motorbikeList.contains(motorbike)) {
+            throw new AppException("Motorbike already exist");
+        }
+        motorbikeList.add(motorbike);
     }
 
     /**

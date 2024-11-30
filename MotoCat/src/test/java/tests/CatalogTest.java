@@ -7,9 +7,6 @@ import static model.MotorbikeType.STANDARD;
 import model.AppException;
 
 import org.junit.jupiter.api.BeforeEach;
-//import org.junit.jupiter.api.BeforeAll;
-//import org.junit.jupiter.api.AfterEach;
-//import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -18,7 +15,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 /**
  *
  * @author Kamil Kotorc
- * @version 3.0
+ * @version 4.0
  */
 public class CatalogTest {
 
@@ -59,7 +56,7 @@ public class CatalogTest {
         Motorbike motorbike = new Motorbike("TestMotorbike",1.11,2,3,STANDARD);
         catalog.addMotorbike(motorbike);
                 
-        assertEquals(sizePlusOne, catalog.getMotorbikeList().size(), 0.01, "ArrayList size should be equal to size + 1");
+        assertEquals(sizePlusOne, catalog.getMotorbikeList().size(), 0.01, "ArrayList size should increase by 1");
     }
     
     @Test
@@ -97,9 +94,9 @@ public class CatalogTest {
 
     }
 
-//    static Stream<Double> stringProvider() {
-//        return Stream.of(5.55,9.99);
-//    }
+    static Stream<Double> stringProvider() {
+        return Stream.of(5.55,9.99);
+    }
 //  
 //    @BeforeAll
 //    public static void setUpClass() {
