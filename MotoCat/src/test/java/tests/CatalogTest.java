@@ -1,6 +1,9 @@
 package tests;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Stream;
+
 import model.Catalog;
 import model.Motorbike;
 import static model.MotorbikeType.STANDARD;
@@ -26,20 +29,43 @@ public class CatalogTest {
         catalog = new Catalog("TestCatalog");
     }
     
+    // testing class for motorbikeList being null
+    
     @Test
-    public void testRemoveMotorbike() {
+    public void testNullArrayList() {
+        List<Motorbike> emptyList = new ArrayList<>();
+        Catalog testCatalog = new Catalog("test",null);
+        
+        assertFalse(testCatalog.getMotorbikeList() == null, "Catalog list should NOT be null");
+        
+        testCatalog.setMotorbikeList(null);
+        
+        assertFalse(testCatalog.getMotorbikeList() == null, "Catalog list should NOT be null");
+        
+        assertEquals(testCatalog.getMotorbikeList(), emptyList, "Catalog list should be empty ArrayList");
+    }
+    
+    // testing removeMotorbike
+    
+    @Test
+    public void testResultRemoveMotorbike() {
         Motorbike motorbike = new Motorbike("TestMotorbike",1.11,2,3,STANDARD);
-        catalog.addMotorbike(motorbike);
         
         try {
-            catalog.removeMotorbike(motorbike);  
-        } catch (AppException e) {
+            catalog.addMotorbike(motorbike);
+        } catch (AppException ex) {
+        }
+        try {
+            catalog.removeMotorbike(motorbike);
+        } catch (AppException ex) {
             fail("An exception should NOT be thrown");
         }
+        
+        assertEquals(0, catalog.getMotorbikeList().size(), 0.01, "Motorbike list size should be equal to 0");
     }
     
     @Test
-    public void testRemoveMotorbikeException() {
+    public void testExceptionRemoveMotorbike() {
         Motorbike motorbike = new Motorbike("TestMotorbike",1.11,2,3,STANDARD);
                 
         try {
@@ -49,55 +75,115 @@ public class CatalogTest {
         }
     }
     
+    // testing addMotorbike
+    
     @Test
-    public void testAddMotorbike() {
-        int sizePlusOne = catalog.getMotorbikeList().size() + 1;
-        
+    public void testResultAddMotorbike() {
         Motorbike motorbike = new Motorbike("TestMotorbike",1.11,2,3,STANDARD);
-        catalog.addMotorbike(motorbike);
+        try {
+            catalog.addMotorbike(motorbike);
+        } catch (AppException ex) {
+            fail("An exception should NOT be thrown");
+        }
                 
-        assertEquals(sizePlusOne, catalog.getMotorbikeList().size(), 0.01, "ArrayList size should increase by 1");
+        assertEquals(1, catalog.getMotorbikeList().size(), 0.01, "Motorbike list size should increase by 1");
     }
+    
+    @ParameterizedTest
+    @MethodSource("motorbikeStream")
+    public void testExceptionAddMotorbike(Motorbike motorbike) {
+        if(motorbike == null){
+            try {
+                catalog.addMotorbike(motorbike);
+                fail("An exception should be thrown for null");
+            } catch (AppException ex) {
+            }
+        } else {
+            try {
+                catalog.addMotorbike(motorbike);
+                catalog.addMotorbike(motorbike);
+                fail("An exception should be thrown for duplicate");
+            } catch (AppException ex) {
+            }
+        }
+    }
+    
+    static Stream<Motorbike> motorbikeStream() {
+        Motorbike motorbike = new Motorbike("TestMotorbike",1.11,2,3,STANDARD);
+        return Stream.of(motorbike,null);
+    }
+    
+    // testing editMotorbike
+    
+    @Test
+    public void testResultEditMotorbike() {
+        Motorbike oldMotorbike = new Motorbike("TestMotorbike1",1.11,2,3,STANDARD);
+        Motorbike newMotorbike = new Motorbike("TestMotorbike2",2.22,4,6,STANDARD);
+        
+        try {
+            catalog.addMotorbike(oldMotorbike);
+            catalog.editMotorbike(oldMotorbike,newMotorbike);
+        } catch (AppException ex) {
+            fail("An exception should NOT be thrown");
+        }
+        
+        assertFalse(catalog.getMotorbikeList().contains(oldMotorbike), "Catalog should NOT contain oldMotorbike");        
+        assertTrue(catalog.getMotorbikeList().contains(newMotorbike), "Catalog should contain newMotorbike");
+    }
+    
+    @Test
+    public void testExceptionEditMotorbike() {
+        Motorbike nullMotorbike = null;
+        Motorbike validMotorbike = new Motorbike("TestMotorbike",1.11,2,3,STANDARD);
+        
+        try {
+            catalog.editMotorbike(validMotorbike,validMotorbike);
+            fail("An exception should be thrown for editing motorbike NOT listed in catalog");
+        } catch (AppException ex) {
+        }
+        
+        try {
+            catalog.addMotorbike(validMotorbike);
+            catalog.editMotorbike(validMotorbike, nullMotorbike);
+            fail("An exception should be thrown for new motorbike being null");
+        } catch (AppException ex) {
+        }   
+    }
+    
+    // testing clearCatalog
     
     @Test
     public void testClearCatalog() {
         Motorbike motorbike = new Motorbike("TestMotorbike",1.11,2,3,STANDARD);
-        catalog.addMotorbike(motorbike);
+        try {
+            catalog.addMotorbike(motorbike);
+        } catch (AppException ex) {
+        }
+        catalog.clearCatalog();
+        
+        assertEquals(0, catalog.getMotorbikeList().size(), 0.01, "Motorbike list size should be equal to 0");
         
         catalog.clearCatalog();
-        assertEquals(0, catalog.getMotorbikeList().size(), 0.01, "ArrayList size should be equal to 0");
         
+        assertEquals(0, catalog.getMotorbikeList().size(), 0.01, "Motorbike list size should be equal to 0");     
     }
+    
+    // testing isCatalogEmpty
     
     @Test
     public void testIsCatalogEmpty() {
-        
-        assertTrue(catalog.isCatalogEmpty(), "Should return true");
-        
         Motorbike motorbike = new Motorbike("TestMotorbike",1.11,2,3,STANDARD);
-        catalog.addMotorbike(motorbike);
         
-        assertTrue(!catalog.isCatalogEmpty(), "Should return true");
-    }
-    
-    @ParameterizedTest
-    @MethodSource("stringProvider")
-    public void testUpdateMotorbikePrice(Double argument) {
-        Motorbike motorbike = new Motorbike("TestMotorbike",1.11,2,3,STANDARD);
-        catalog.addMotorbike(motorbike);
+        assertTrue(catalog.isCatalogEmpty(), "Method should return true");
         
-        try{
-            catalog.updateMotorbikePrice(motorbike, argument);
-        } catch (AppException e) {
-            fail("An exception should NOT be thrown");
+        try {
+            catalog.addMotorbike(motorbike);
+        } catch (AppException ex) {
         }
-
+        
+        assertFalse(catalog.isCatalogEmpty(), "Method should return false");
     }
-
-    static Stream<Double> stringProvider() {
-        return Stream.of(5.55,9.99);
-    }
-//  
+  
 //    @BeforeAll
 //    public static void setUpClass() {
 //    }
@@ -108,7 +194,6 @@ public class CatalogTest {
 //    
 //    @BeforeEach
 //    public void setUp() {
-//        
 //    }
 //    
 //    @AfterEach
