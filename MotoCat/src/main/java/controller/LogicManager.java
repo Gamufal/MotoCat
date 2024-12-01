@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import model.AppException;
 import model.Catalog;
 import model.Motorbike;
 import model.MotorbikeType;
@@ -80,7 +81,10 @@ public final class LogicManager {
         }
 
         Motorbike motorbike = catalog.getMotorbikeList().get(selectedIndex);
-        catalog.removeMotorbike(motorbike);
+        try {
+            catalog.removeMotorbike(motorbike);
+        } catch (AppException ex) {
+        }
         
         updateMotorbikeTable();
 
@@ -121,7 +125,10 @@ public final class LogicManager {
             MotorbikeType parsedType = fromString(type);
             
             Motorbike motorbike = new Motorbike(parsedModel, parsedPrice, parsedDisplacement, parsedPower, parsedType);
-            catalog.addMotorbike(motorbike);
+            try {
+                catalog.addMotorbike(motorbike);
+            } catch (AppException ex) {
+            }
             gui.clearInputFields();
             
             updateMotorbikeTable();
@@ -178,7 +185,10 @@ public final class LogicManager {
             int parsedPower = Math.abs(Integer.parseInt(power));
             
             Motorbike updatedMotorbike = new Motorbike(parsedModel, parsedPrice, parsedDisplacement, parsedPower, motorbike.type());
-            catalog.editMotorbike(motorbike, updatedMotorbike);
+            try {
+                catalog.editMotorbike(motorbike, updatedMotorbike);
+            } catch (AppException ex) {
+            }
             
             updateMotorbikeTable();  
             
