@@ -8,7 +8,7 @@ import java.util.List;
  * information about the brand and a list of motorbikes.
  *
  * @author Kamil Kotorc
- * @version 3.1
+ * @version 4.1
  */
 public class Catalog {
 
@@ -35,11 +35,11 @@ public class Catalog {
      * Constructs a Catalog with the specified brand name.
      *
      * @param brand the name of the brand for this catalog
-     * @param motorbikeList the list of motorbikes
+     * @param motorbikeList the list of motorbikes, if list is null it creates new ArrayList
      */
     public Catalog(String brand, List<Motorbike> motorbikeList) {
         this.brand = brand;
-        this.motorbikeList = motorbikeList;
+        this.motorbikeList = (motorbikeList != null) ? motorbikeList : new ArrayList<>();
     }
 
     /**
@@ -72,10 +72,10 @@ public class Catalog {
     /**
      * Sets the list of motorbikes for the catalog.
      *
-     * @param motorbikes a list of Motorbike objects to set in the catalog
+     * @param motorbikes a list of Motorbike objects to set in the catalog, if list is null it creates new ArrayList
      */
     public void setMotorbikeList(List<Motorbike> motorbikes) {
-        this.motorbikeList = motorbikes;
+        this.motorbikeList = (motorbikeList != null) ? motorbikeList : new ArrayList<>();
     }
 
     // METHODS
@@ -87,12 +87,11 @@ public class Catalog {
      * @throws AppException if there is no motorbike in catalog
      */
     public void removeMotorbike(Motorbike motorbike) throws AppException {
-        if (!motorbikeList.contains(motorbike)) {
-            throw new AppException("No motorbike in catalog");
+        if (!motorbikeList.remove(motorbike)) {
+            throw new AppException("No motorbike listed in catalog");
         }
-        motorbikeList.remove(motorbike);
     }
-    
+
     /**
      * Adds a new motorbike to the catalog.
      *
@@ -100,8 +99,11 @@ public class Catalog {
      * @throws AppException if motorbike already exist in catalog
      */
     public void addMotorbike(Motorbike motorbike) throws AppException {
+        if (motorbike == null) {
+            throw new AppException("Motorbike cannot be null");
+        }
         if (motorbikeList.contains(motorbike)) {
-            throw new AppException("Motorbike already exist");
+            throw new AppException("Motorbike already exists");
         }
         motorbikeList.add(motorbike);
     }
@@ -111,21 +113,24 @@ public class Catalog {
      *
      * @param oldMotorbike the motorbike to edit
      * @param newMotorbike the motorbike with new parameters
+     * @throws AppException if there is no motorbike in catalog
      */
-    public void editMotorbike(Motorbike oldMotorbike, Motorbike newMotorbike) {
-        int index = motorbikeList.indexOf(oldMotorbike);
-        if (index != -1) {
-            motorbikeList.set(index, newMotorbike);
+    public void editMotorbike(Motorbike oldMotorbike, Motorbike newMotorbike) throws AppException {
+        if (newMotorbike == null) {
+            throw new AppException("Motorbike cannot be null");
         }
+        int index = motorbikeList.indexOf(oldMotorbike);
+        if (index == -1) {
+            throw new AppException("No motorbike listed in catalog");
+        }
+        motorbikeList.set(index, newMotorbike);
     }
 
     /**
-     * Clears all motorbikes in motorbike list if it`s not already empty
+     * Clears all motorbikes in motorbike list
      */
     public void clearCatalog() {
-        if (!motorbikeList.isEmpty()) {
-            motorbikeList.clear();
-        }
+        motorbikeList.clear();
     }
 
     /**
