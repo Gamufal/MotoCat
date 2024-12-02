@@ -17,16 +17,10 @@ import controller.LogicManager;
  *
  * This class contains the main method, which serves as the entry point of the application.
  *
- * @version 3.1
+ * @version 4.0
  * @author Kamil Kotorc
  *
  */
-
-// - strumienie
-
-// - dokończenie testów katalogu
-// - zrobienie testów motocykla
-// - weryfikacja spełnienia wymagań testów
 
 public class App {
     
