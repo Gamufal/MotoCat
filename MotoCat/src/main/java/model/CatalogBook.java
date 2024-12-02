@@ -10,7 +10,7 @@ import lombok.*;
  * The catalog contains information about the brand and a list of motorbikes.
  * 
  * @author Kamil Kotorc
- * @version 3.0
+ * @version 3.1
  */
 
 //Lombok version B
@@ -22,54 +22,61 @@ public class CatalogBook {
     private String brand;
     private List<Motorbike> motorbikeList = new ArrayList<>();
     
-    
-    
-     /**
-     * Retrieves a motorbike from the catalog by its model name.
-     *
-     * @param modelName the model name of the motorbike to retrieve
-     * @return the motorbike if found; null otherwise
-     */
-    public Motorbike getMotorbikeByModel(String modelName) {
-        for (Motorbike motorbike : motorbikeList) {
-            if (motorbike.model().equals(modelName)) {
-                return motorbike;
-            }
-        }
-        return null; 
-    }
-    
-    /**
-     * Adds a new motorbike to the catalog.
-     *
-     * @param motorbike the motorbike to add to the list
-     */
-    public void AddMotorbike(Motorbike motorbike) {
-        if (!motorbikeList.contains(motorbike)) {
-            motorbikeList.add(motorbike);  
-        }
-    }
+    // METHODS
     
     /**
      * Removes a motorbike from the catalog.
      *
      * @param motorbike the motorbike to remove
+     * @throws AppException if there is no motorbike in catalog
      */
-    public void RemoveMotorbike(Motorbike motorbike){
-        if (motorbikeList.contains(motorbike)) {
-        motorbikeList.remove(motorbike);
+    public void removeMotorbike(Motorbike motorbike) throws AppException {
+        if (!motorbikeList.remove(motorbike)) {
+            throw new AppException("No motorbike listed in catalog");
         }
     }
-    
+
+    /**
+     * Adds a new motorbike to the catalog.
+     *
+     * @param motorbike the motorbike to add to the list
+     * @throws AppException if motorbike already exist in catalog
+     */
+    public void addMotorbike(Motorbike motorbike) throws AppException {
+        if (motorbike == null) {
+            throw new AppException("Motorbike cannot be null");
+        }
+        if (motorbikeList.contains(motorbike)) {
+            throw new AppException("Motorbike already exists");
+        }
+        motorbikeList.add(motorbike);
+    }
+
+    /**
+     * Edits the motorbike in the catalog.
+     *
+     * @param oldMotorbike the motorbike to edit
+     * @param newMotorbike the motorbike with new parameters
+     * @throws AppException if there is no motorbike in catalog
+     */
+    public void editMotorbike(Motorbike oldMotorbike, Motorbike newMotorbike) throws AppException {
+        if (newMotorbike == null) {
+            throw new AppException("Motorbike cannot be null");
+        }
+        int index = motorbikeList.indexOf(oldMotorbike);
+        if (index == -1) {
+            throw new AppException("No motorbike listed in catalog");
+        }
+        motorbikeList.set(index, newMotorbike);
+    }
+
     /**
      * Clears all motorbikes in motorbike list
      */
-    public void clearCatalog(){
-        if (!motorbikeList.isEmpty()) {
-           motorbikeList.clear();
-        }
+    public void clearCatalog() {
+        motorbikeList.clear();
     }
-    
+
     /**
      * Checks if the specified catalog is empty.
      *
@@ -79,14 +86,4 @@ public class CatalogBook {
         return motorbikeList.isEmpty();
     }
     
-    /**
-     * Counts the total number of motorbikes in the specified catalog.
-     *
-     * @return the number of motorbikes in the catalog
-     */
-    public int countMotorbikes() {
-        return motorbikeList.size();
-    }
-    
 }
-
