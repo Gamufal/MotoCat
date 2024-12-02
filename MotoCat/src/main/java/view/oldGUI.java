@@ -5,6 +5,7 @@ import javax.swing.DefaultListModel;
 //import model.Motorbike;
 
 /**
+ * THIS IS OLD VERSION, NOT CURRENTLY USED,
  * The GUI class represents the graphical user interface of the Motorcycle Catalog application.
  * It is responsible for displaying the catalog, handling user interactions, and updating the view.
  * 
