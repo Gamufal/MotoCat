@@ -1,0 +1,23 @@
+body {
+    background-color: tan;
+    font-family: monospace;
+}
+
+table, td, th, tr {
+    border-collapse: collapse;
+    border: 1px white solid;
+    padding: 10px;
+}
+
+
+
+.center {
+    text-align: center;  
+    vertical-align: middle;
+}
+
+.errorInfo{
+    color: red;
+    font-size: 20pt;
+    text-align: center;
+}

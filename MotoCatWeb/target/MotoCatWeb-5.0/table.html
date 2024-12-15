@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Browse Catalog</title>
+        <script src="js/table.js"></script>
+        <link rel="stylesheet" href="css/style.css">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body onload="getAllTable('tableID')">
+        <h1 class="center">Catalog</h1>
+        <p><a href="index.html">Home</a></p>
+        <p><a href="calculator.html">Calculator</a></p>
+        <div id="errorInfo" class="errorInfo">&nbsp;</div>
+        <table>
+            <thead>                
+                <tr>
+                    <th>Model</th>
+                    <th>Price</th>
+                    <th>Displacement</th>
+                    <th>Power</th>
+                    <th>Type</th>
+                </tr>
+            </thead>            
+            <tbody id="tableID">
+            </tbody>            
+        </table>
+    </body>
+</html>
