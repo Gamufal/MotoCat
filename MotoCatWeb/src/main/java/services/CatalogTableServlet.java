@@ -7,9 +7,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.AppException;
+import model.Motorbike;
+import model.MotorbikeType;
+import model.Singleton;
 
 /**
- *
+ * Servlet responsible for handling the addition, editing, and deletion of motorbikes in the catalog.
+ * Handles HTTP GET and POST requests to update the catalog and respond with a result.
+ * 
  * @author Kamil Kotorc
  * @version 5.0
  */
@@ -17,8 +23,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public class CatalogTableServlet extends HttpServlet {
 
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
+     * Processes requests for both HTTP GET and POST methods.
      *
      * @param request servlet request
      * @param response servlet response
@@ -66,9 +71,68 @@ public class CatalogTableServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String action = request.getParameter("action");
+
+        if ("add".equals(action)) {
+            // Dodawanie nowego rekordu
+            String model = request.getParameter("model");
+            double price = Double.parseDouble(request.getParameter("price"));
+            int displacement = Integer.parseInt(request.getParameter("displacement"));
+            int power = Integer.parseInt(request.getParameter("power"));
+            MotorbikeType type = MotorbikeType.fromString(request.getParameter("type"));
+
+            Motorbike newMotorbike = new Motorbike(model, price, displacement, power, type);
+            try {
+                Singleton.getInstance().addMotorbike(newMotorbike);
+            } catch (AppException e) {
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
+            }
+        } else if ("edit".equals(action)) {
+            // Edycja rekordu
+            String oldModel = request.getParameter("oldModel");
+            Motorbike oldMotorbike = Singleton.getInstance().getMotorbikeList().stream()
+                    .filter(m -> m.model().equals(oldModel))
+                    .findFirst()
+                    .orElse(null);
+
+            if (oldMotorbike != null) {
+                String newModel = request.getParameter("model");
+                double newPrice = Double.parseDouble(request.getParameter("price"));
+                int newDisplacement = Integer.parseInt(request.getParameter("displacement"));
+                int newPower = Integer.parseInt(request.getParameter("power"));
+                MotorbikeType newType = MotorbikeType.fromString(request.getParameter("type"));
+
+                Motorbike updatedMotorbike = new Motorbike(newModel, newPrice, newDisplacement, newPower, newType);
+                try {
+                    Singleton.getInstance().editMotorbike(oldMotorbike, updatedMotorbike);
+                } catch (AppException e) {
+                    response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
+                }
+            } else {
+                response.sendError(HttpServletResponse.SC_NOT_FOUND, "Motorbike not found");
+            }
+        } else if ("delete".equals(action)) {
+            // Usuwanie rekordu
+            String model = request.getParameter("model");
+            Motorbike motorbikeToRemove = Singleton.getInstance().getMotorbikeList().stream()
+                    .filter(m -> m.model().equals(model))
+                    .findFirst()
+                    .orElse(null);
+
+            if (motorbikeToRemove != null) {
+                try {
+                    Singleton.getInstance().removeMotorbike(motorbikeToRemove);
+                } catch (AppException e) {
+                    response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
+                }
+            } else {
+                response.sendError(HttpServletResponse.SC_NOT_FOUND, "Motorbike not found");
+            }
+        }
+
+        // Po każdej operacji przeładuj tabelę
+        response.sendRedirect("table");
     }
 
     /**

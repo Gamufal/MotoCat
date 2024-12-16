@@ -5,13 +5,30 @@ import static model.MotorbikeType.ENDURO;
 import static model.MotorbikeType.SPORT;
 import static model.MotorbikeType.STANDARD;
 
+/**
+ * Singleton pattern implementation for the Catalog object.
+ * 
+ * The singleton is initialized with a set of predefined motorbikes.
+ * It provides a static method to get the single instance of the Catalog.
+ * 
+ * @author Kamil Kotorc
+ * @version 5.0
+ */
 public class Singleton {
    
     private static Catalog instance;
-
+    
+    /**
+     * Private constructor to prevent instantiation.
+     */
     private Singleton() {        
     }
     
+    /**
+     * Returns the unique instance of the Catalog.
+     *
+     * @return the singleton instance of Catalog
+     */
     public static Catalog getInstance() {
 
         if(instance == null) {
