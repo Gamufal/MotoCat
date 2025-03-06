@@ -1,5 +1,8 @@
 package model;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,138 +11,98 @@ import java.util.List;
  * information about the brand and a list of motorbikes.
  *
  * @author Kamil Kotorc
- * @version 4.1
+ * @version 6.0
  */
-public class Catalog {
+@Entity
+@Table(name = "catalogs")
+public class Catalog implements Serializable {
 
-    /**
-     * The brand name of the motorbikes in the catalog.
-     */
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    private int id;
+
+    @Column(name = "brand", length = 50, nullable = false)
+    @NotBlank
     private String brand;
 
-    /**
-     * A list of motorbikes associated with the brand in this catalog.
-     */
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "catalog_id")
     private List<Motorbike> motorbikeList = new ArrayList<>();
 
-    /**
-     * Constructs a Catalog with the specified brand name.
-     *
-     * @param brand the name of the brand for this catalog
-     */
+    public Catalog() {
+    }
+
     public Catalog(String brand) {
         this.brand = brand;
     }
 
-    /**
-     * Constructs a Catalog with the specified brand name.
-     *
-     * @param brand the name of the brand for this catalog
-     * @param motorbikeList the list of motorbikes, if list is null it creates new ArrayList
-     */
     public Catalog(String brand, List<Motorbike> motorbikeList) {
         this.brand = brand;
         this.motorbikeList = (motorbikeList != null) ? motorbikeList : new ArrayList<>();
     }
 
-    /**
-     * Returns the brand of the catalog.
-     *
-     * @return the brand name of the catalog
-     */
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getBrand() {
         return brand;
     }
 
-    /**
-     * Sets the brand name of the catalog.
-     *
-     * @param brand the new brand name to set for the catalog
-     */
     public void setBrand(String brand) {
         this.brand = brand;
     }
 
-    /**
-     * Returns the list of motorbikes in the catalog.
-     *
-     * @return a list of Motorbike objects in the catalog
-     */
     public List<Motorbike> getMotorbikeList() {
         return motorbikeList;
     }
 
-    /**
-     * Sets the list of motorbikes for the catalog.
-     *
-     * @param motorbikes a list of Motorbike objects to set in the catalog, if list is null it creates new ArrayList
-     */
-    public void setMotorbikeList(List<Motorbike> motorbikes) {
+    public void setMotorbikeList(List<Motorbike> motorbikeList) {
         this.motorbikeList = (motorbikeList != null) ? motorbikeList : new ArrayList<>();
     }
 
-    // METHODS
-    
-    /**
-     * Removes a motorbike from the catalog.
-     *
-     * @param motorbike the motorbike to remove
-     * @throws AppException if there is no motorbike in catalog
-     */
-    public void removeMotorbike(Motorbike motorbike) throws AppException {
-        if (!motorbikeList.remove(motorbike)) {
-            throw new AppException("No motorbike listed in catalog");
-        }
+    public void removeMotorbike(Motorbike motorbike) {
+        motorbikeList.remove(motorbike);
     }
 
-    /**
-     * Adds a new motorbike to the catalog.
-     *
-     * @param motorbike the motorbike to add to the list
-     * @throws AppException if motorbike already exist in catalog
-     */
-    public void addMotorbike(Motorbike motorbike) throws AppException {
+    public void addMotorbike(Motorbike motorbike) {
         if (motorbike == null) {
-            throw new AppException("Motorbike cannot be null");
-        }
-        if (motorbikeList.contains(motorbike)) {
-            throw new AppException("Motorbike already exists");
+            throw new IllegalArgumentException("Motorbike cannot be null");
         }
         motorbikeList.add(motorbike);
     }
 
-    /**
-     * Edits the motorbike in the catalog.
-     *
-     * @param oldMotorbike the motorbike to edit
-     * @param newMotorbike the motorbike with new parameters
-     * @throws AppException if there is no motorbike in catalog
-     */
-    public void editMotorbike(Motorbike oldMotorbike, Motorbike newMotorbike) throws AppException {
+    public void editMotorbike(Motorbike oldMotorbike, Motorbike newMotorbike) {
         if (newMotorbike == null) {
-            throw new AppException("Motorbike cannot be null");
+            throw new IllegalArgumentException("Motorbike cannot be null");
         }
         int index = motorbikeList.indexOf(oldMotorbike);
-        if (index == -1) {
-            throw new AppException("No motorbike listed in catalog");
+        if (index != -1) {
+            motorbikeList.set(index, newMotorbike);
+        } else {
+            throw new IllegalArgumentException("Motorbike not found in catalog");
         }
-        motorbikeList.set(index, newMotorbike);
     }
 
-    /**
-     * Clears all motorbikes in motorbike list
-     */
     public void clearCatalog() {
         motorbikeList.clear();
     }
 
-    /**
-     * Checks if the specified catalog is empty.
-     *
-     * @return true if the catalog is empty; false otherwise
-     */
     public boolean isCatalogEmpty() {
         return motorbikeList.isEmpty();
     }
 
+    @Override
+    public String toString() {
+        return "Catalog{" +
+                "id=" + id +
+                ", brand='" + brand + '\'' +
+                ", motorbikeList=" + motorbikeList +
+                '}';
+    }
 }

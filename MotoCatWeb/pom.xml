@@ -6,7 +6,6 @@
     <version>5.0</version>
     <packaging>war</packaging>
     <name>MotoCatWeb</name>
-    
     <properties>
         <maven.compiler.release>21</maven.compiler.release>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
@@ -39,6 +38,21 @@
             <artifactId>junit-jupiter-engine</artifactId>
             <version>5.10.2</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.platform</groupId>
+            <artifactId>jakarta.jakartaee-api</artifactId>
+            <version>9.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.derby</groupId>
+            <artifactId>derby</artifactId>
+            <version>10.17.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.derby</groupId>
+            <artifactId>derbyclient</artifactId>
+            <version>10.17.1.0</version>
         </dependency>
     </dependencies>
     
@@ -87,4 +101,5 @@
             </plugin>
         </plugins>
     </build>
+    <description>app.polsl.MotoCatWeb</description>
 </project>

@@ -83,11 +83,9 @@ public class CatalogTableServlet extends HttpServlet {
             MotorbikeType type = MotorbikeType.fromString(request.getParameter("type"));
 
             Motorbike newMotorbike = new Motorbike(model, price, displacement, power, type);
-            try {
-                Singleton.getInstance().addMotorbike(newMotorbike);
-            } catch (AppException e) {
-                response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
-            }
+            
+            Singleton.getInstance().addMotorbike(newMotorbike);
+            
         } else if ("edit".equals(action)) {
             // Edycja rekordu
             String oldModel = request.getParameter("oldModel");
@@ -104,11 +102,9 @@ public class CatalogTableServlet extends HttpServlet {
                 MotorbikeType newType = MotorbikeType.fromString(request.getParameter("type"));
 
                 Motorbike updatedMotorbike = new Motorbike(newModel, newPrice, newDisplacement, newPower, newType);
-                try {
-                    Singleton.getInstance().editMotorbike(oldMotorbike, updatedMotorbike);
-                } catch (AppException e) {
-                    response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
-                }
+                
+                Singleton.getInstance().editMotorbike(oldMotorbike, updatedMotorbike);
+                
             } else {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND, "Motorbike not found");
             }
@@ -121,11 +117,9 @@ public class CatalogTableServlet extends HttpServlet {
                     .orElse(null);
 
             if (motorbikeToRemove != null) {
-                try {
-                    Singleton.getInstance().removeMotorbike(motorbikeToRemove);
-                } catch (AppException e) {
-                    response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
-                }
+                
+                Singleton.getInstance().removeMotorbike(motorbikeToRemove);
+                
             } else {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND, "Motorbike not found");
             }
